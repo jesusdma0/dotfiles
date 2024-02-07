@@ -11,9 +11,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-###
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 #installation via script from github
@@ -521,6 +520,7 @@ alias xr="xrandr --output DP-2 --auto --right-of eDP-1"
 alias wifimenu='bash ~/.local/bin/rofi-wifi-menu.sh'
 alias xr='xrandr --output DP-2 --auto --right-of eDP-1'
 alias p3='python3'
+alias ss='grim -g "$(slurp)" - | swappy -f -'
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source ~/.bashrc
@@ -549,6 +549,15 @@ source ~/.bashrc
 #cpufetch
 #colorscript random
 
+###################
+# PERSONAL CONFIG #
+###################
+
+
+########
+# PNPM #
+########
+
 # pnpm
 export PNPM_HOME="/home/aether/.local/share/pnpm"
 case ":$PATH:" in
@@ -559,5 +568,11 @@ esac
 
 export PATH=$PATH:/usr/share/dotnet
 
+
+#########################
+# ENVIRONMENT VARIABLES #
+#########################
+
+export QT_QPA_PLATFORM=wayland
 
 

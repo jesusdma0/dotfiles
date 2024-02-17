@@ -1,18 +1,6 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-
-if [ -z "$TMUX" ]; then
-  exec tmux new-session -A -s main
-fi
-
-
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
+###
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 #installation via script from github
@@ -25,7 +13,7 @@ export ZSH=/usr/share/oh-my-zsh/
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # if you installed the package oh-my-zsh-powerline-theme-git then you type here "powerline" as zsh theme
-ZSH_THEME=""
+ZSH_THEME="powerline"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -88,7 +76,7 @@ ZSH_THEME=""
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z)
+plugins=(git)
 
 if [ -f $ZSH/oh-my-zsh.sh ]; then
   source $ZSH/oh-my-zsh.sh
@@ -107,8 +95,6 @@ fi
 # else
 #   export EDITOR='mvim'
 # fi
-
-export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -133,7 +119,7 @@ export HISTCONTROL=ignoreboth:erasedups
 
 # Make nano the default editor
 
-export EDITOR='nvim'
+export EDITOR='nano'
 export VISUAL='nano'
 
 #PS1='[\u@\h \W]\$ '
@@ -239,7 +225,7 @@ alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 #grub issue 08/2022
-alias install-grub-efi="sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi"
+alias install-grub-efi="sudo grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArcoLinux"
 
 #add new fonts
 alias update-fc='sudo fc-cache -fv'
@@ -260,7 +246,9 @@ alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
 alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
 alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
 
-#switch between lightdm and sddm
+#switch between displaymanager or bootsystem
+alias toboot="sudo /usr/local/bin/arcolinux-toboot"
+alias togrub="sudo /usr/local/bin/arcolinux-togrub"
 alias tolightdm="sudo pacman -S lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings --noconfirm --needed ; sudo systemctl enable lightdm.service -f ; echo 'Lightm is active - reboot now'"
 alias tosddm="sudo pacman -S sddm --noconfirm --needed ; sudo systemctl enable sddm.service -f ; echo 'Sddm is active - reboot now'"
 alias toly="sudo pacman -S ly --noconfirm --needed ; sudo systemctl enable ly.service -f ; echo 'Ly is active - reboot now'"
@@ -376,11 +364,15 @@ alias ngnupgconf="sudo $EDITOR /etc/pacman.d/gnupg/gpg.conf"
 alias nhosts="sudo $EDITOR /etc/hosts"
 alias nhostname="sudo $EDITOR /etc/hostname"
 alias nresolv="sudo $EDITOR /etc/resolv.conf"
-#alias nb="$EDITOR ~/.bashrc"
-#alias nz="$EDITOR ~/.zshrc"
-#alias nf="$EDITOR ~/.config/fish/config.fish"
+alias nb="$EDITOR ~/.bashrc"
+alias nz="$EDITOR ~/.zshrc"
+alias nf="$EDITOR ~/.config/fish/config.fish"
 alias nneofetch="$EDITOR ~/.config/neofetch/config.conf"
 alias nplymouth="sudo $EDITOR /etc/plymouth/plymouthd.conf"
+alias nvconsole="sudo $EDITOR /etc/vconsole.conf"
+alias nenvironment="sudo $EDITOR /etc/environment"
+alias nloader="sudo $EDITOR /boot/efi/loader/loader.conf"
+
 
 #reading logs with bat
 alias lcalamares="bat /var/log/Calamares.log"
@@ -435,6 +427,13 @@ alias bls="betterlockscreen -u /usr/share/backgrounds/arcolinux/"
 #give the list of all installed desktops - xsessions desktops
 alias xd="ls /usr/share/xsessions"
 alias xdw="ls /usr/share/wayland-sessions"
+
+#give a list of the kernels installed
+alias kernel="ls /usr/lib/modules"
+alias kernels="ls /usr/lib/modules"
+
+#am I on grub or systemd-boot
+alias boot="sudo bootctl status | grep Product"
 
 # # ex = EXtractor for all kinds of archives
 # # usage: ex <file>
@@ -513,38 +512,8 @@ alias personal='cp -Rf /personal/* ~'
 
 [[ -f ~/.zshrc-personal ]] && . ~/.zshrc-personal
 
-
-# -------- PERSONAL CONFIG ---------
-
-function git-commit(){
-  echo "Message: " read message
-  git commit -m $message
-}
-
-alias v='nvim'
-alias xr="xrandr --output DP-2 --auto --right-of eDP-1"
-alias wifimenu='bash ~/.local/bin/rofi-wifi-menu.sh'
-alias xr='xrandr --output DP-2 --auto --right-of eDP-1'
-alias p3='python3'
-alias ss='grim -g "$(slurp)" - | swappy -f -'
-alias gs='git status'
-alias gaa='git add .'
-alias gc=git-commit
-
-
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-source ~/.bashrc
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
 # reporting tools - install when not installed
-# The two down below are completely useless, since the commands are set on top of the file
-# ----
-# tmux a -t main 
-# neofetch
-# ----
+neofetch
 #screenfetch
 #alsi
 #paleofetch
@@ -558,31 +527,4 @@ source ~/.bashrc
 #sysinfo-retro
 #cpufetch
 #colorscript random
-
-###################
-# PERSONAL CONFIG #
-###################
-
-
-########
-# PNPM #
-########
-
-# pnpm
-export PNPM_HOME="/home/aether/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-export PATH=$PATH:/usr/share/dotnet
-
-
-#########################
-# ENVIRONMENT VARIABLES #
-#########################
-
-export QT_QPA_PLATFORM=wayland
-
-
+#hyfetch

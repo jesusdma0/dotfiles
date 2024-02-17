@@ -1,35 +1,50 @@
+-- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
-
-local discipline = require("gnu.discipline")
-discipline.cowboy()
-
+-- Add any additional keymaps here
 local keymap = vim.keymap
 
 local opts = { noremap = true, silent = true }
 
 -- Increment/decrement
-keymap.set("n", "=", "<C-a>")
+keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
 
--- Tabs
+-- Delete a word backwards
+-- keymap.set("n", "dw", "vb_d")
+
+-- Select all
+keymap.set("n", "<C-a>", "gg<S-v>G")
+
+-- Jumplist
+keymap.set("n", "<C-m>", "<C-i>", opts)
+
+-- New tab
 keymap.set("n", "te", ":buffer", opts)
 keymap.set("n", "<tab>", ":bnext<Return>", opts)
 keymap.set("n", "<s-tab>", ":bprevious<Return>", opts)
 
--- Ultra Yank
-keymap.set("n", "<leader>y", '"+y')
-keymap.set("v", "<leader>y", '"+y')
-keymap.set("n", "<leader>Y", '"+Y')
-
--- Split
+-- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
 
--- Split movement
-keymap.set("n", "sl", "<C-w>l", opts)
-keymap.set("n", "sh", "<C-w>h", opts)
-keymap.set("n", "sj", "<C-w>j", opts)
-keymap.set("n", "sk", ":vsplit<Return>", opts)
+-- Move window
+keymap.set("n", "sh", "<C-w>h")
+keymap.set("n", "sk", "<C-w>k")
+keymap.set("n", "sj", "<C-w>j")
+keymap.set("n", "sl", "<C-w>l")
+
+-- Resize window
+keymap.set("n", "<C-w><left>", "<C-w><")
+keymap.set("n", "<C-w><right>", "<C-w>>")
+keymap.set("n", "<C-w><up>", "<C-w>+")
+keymap.set("n", "<C-w><down>", "<C-w>-")
+
+-- Ultra Yank
+-- Idk if this works
+-- Yeah it does work
+keymap.set("n", "<leader>y", '"+y')
+keymap.set("v", "<leader>y", '"+y')
+keymap.set("n", "<leader>Y", '"+Y')
 
 -- Vertical movement
 keymap.set("v", "<C-d>", "<C-d>zz")
@@ -48,5 +63,5 @@ keymap.set("n", "<leader>pd", function()
   vim.diagnostic.goto_next()
 end, opts)
 
--- Noice
-keymap.set("n", "<leader>sn", ":Noice<Return>", opts)
+-- LSP Import Resolv
+keymap.set("n", "<leader>a", require("lspimport").import, opts)

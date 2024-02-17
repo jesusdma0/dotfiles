@@ -25,12 +25,6 @@ keymap.set("n", "<leader>Y", '"+Y')
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
 
--- Split movement
-keymap.set("n", "<M-l>", "<C-w>l", opts)
-keymap.set("n", "<M-h>", "<C-w>h", opts)
-keymap.set("n", "<M-j>", "<C-w>j", opts)
-keymap.set("n", "<M-k>", "<C-w>k", opts)
-
 -- Vertical movement
 keymap.set("v", "<C-d>", "<C-d>zz")
 keymap.set("n", "<C-d>", "<C-d>zz")

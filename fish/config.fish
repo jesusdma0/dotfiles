@@ -7,6 +7,7 @@ end
 alias v="nvim"
 alias vf="nvim (fzf)"
 alias sv="sudo nvim"
+alias svf="sudo nvim (fzf)"
 alias l="ls -la"
 alias gi="git"
 alias gs="git status"

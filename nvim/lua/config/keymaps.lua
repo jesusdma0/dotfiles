@@ -33,6 +33,9 @@ keymap.set("n", "<C-u>", "<C-u>zz")
 keymap.set("n", "n", "nzzzv")
 keymap.set("n", "N", "Nzzzv")
 
+-- I don't like CTRL-C
+keymap.set("i", "<C-c>", "<Esc>")
+
 -- Diagnostics
 keymap.set("n", "<leader>nd", function()
   vim.diagnostic.goto_next()

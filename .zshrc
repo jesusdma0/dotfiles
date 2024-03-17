@@ -528,3 +528,5 @@ neofetch
 #cpufetch
 #colorscript random
 #hyfetch
+
+PATH=~/.console-ninja/.bin:$PATH

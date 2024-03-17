@@ -5,7 +5,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(find ~/gnu/work ~/gnu~/ ~/gnu/learning ~/gnu/personal ~/gnu/itla/ -mindepth 1 -maxdepth 2 -type d | fzf)
+	selected=$(find ~/gnu/work ~/gnu ~/gnu/learning ~/gnu/personal ~/gnu/itla/ -mindepth 1 -maxdepth 2 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
